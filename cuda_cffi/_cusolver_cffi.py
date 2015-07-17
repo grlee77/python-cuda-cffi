@@ -10,8 +10,8 @@ from os.path import join as pjoin
 
 import numpy as np  # don't remove!  is used during call to exec() below
 
-from scikits.cuda._cffi_autogen_common import wrap_library
-from scikits.cuda._cusolver_cffi_autogen import (
+from ._cffi_autogen_common import wrap_library
+from ._cusolver_cffi_autogen import (
     generate_cffi_cdef,
     ffi_init_cusolver,
     build_func_body,
