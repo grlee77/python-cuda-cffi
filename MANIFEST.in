@@ -1,0 +1,5 @@
+recursive-include cuda_cffi *.py
+recursive-include cuda_cffi *.h
+recursive-include cuda_cffi *.json
+recursive-include tests *.py
+exclude MANIFEST.in
