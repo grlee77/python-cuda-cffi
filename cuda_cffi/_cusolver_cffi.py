@@ -20,20 +20,29 @@ from ._cusolver_cffi_autogen import (
 base_dir = os.path.dirname(__file__)
 python_wrapper_file = pjoin(base_dir, '_cusolver_python.py')
 
-""" Call wrap_library to wrap cuSOLVER.  This should only be slow the first
-it is called.  After that the already compiled wrappers should be found. """
-ffi, ffi_lib = wrap_library(
-    cffi_file=pjoin(base_dir, '_cusolver.cffi'),
-    python_wrapper_file=python_wrapper_file,
-    build_body_func=build_func_body,
-    ffi_init_func=ffi_init_cusolver,
-    cdef_generator_func=generate_cffi_cdef,
-    variable_defs_json=pjoin(base_dir, 'cusolver_variable_descriptions.json'),
-    func_defs_json=pjoin(base_dir, 'cusolver_func_descriptions.json'),
-    func_description_generator_func=generate_func_descriptions_json,
-    force_update=False,
-    verbose=True)
+try:
+    from ._cusolver_ffi import ffi
+    from ._cusolver_ffi import lib as ffi_lib
+except:
+    print("IMPORT FAILED.  NEED TO BUILD")
 
+    """ Call wrap_library to wrap cuSOLVER.  This should only be slow the first
+    it is called.  After that the already compiled wrappers should be found. """
+    ffi, ffi_lib = wrap_library(
+        lib_name='_cusolver_ffi',
+        cffi_file=pjoin(base_dir, '_cusolver.cffi'),
+        python_wrapper_file=python_wrapper_file,
+        build_body_func=build_func_body,
+        ffi_init_func=ffi_init_cusolver,
+        cdef_generator_func=generate_cffi_cdef,
+        variable_defs_json=pjoin(base_dir,
+                                 'cusolver_variable_descriptions.json'),
+        func_defs_json=pjoin(base_dir, 'cusolver_func_descriptions.json'),
+        func_description_generator_func=generate_func_descriptions_json,
+        force_update=False,
+        verbose=True)
+    from ._cusolver_ffi import ffi
+    from ._cusolver_ffi import lib as ffi_lib
 
 class CUSOLVER_ERROR(Exception):
     """CUSOLVER error"""

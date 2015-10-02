@@ -20,20 +20,26 @@ from ._cusparse_cffi_autogen import (
 base_dir = os.path.dirname(__file__)
 python_wrapper_file = pjoin(base_dir, '_cusparse_python.py')
 
-""" Call wrap_library to wrap cuSPARSE.  This should only be slow the first
-it is called.  After that the already compiled wrappers should be found. """
-ffi, ffi_lib = wrap_library(
-    cffi_file=pjoin(base_dir, '_cusparse.cffi'),
-    python_wrapper_file=python_wrapper_file,
-    build_body_func=build_func_body,
-    ffi_init_func=ffi_init_cusparse,
-    cdef_generator_func=generate_cffi_cdef,
-    variable_defs_json=pjoin(base_dir, 'cusparse_variable_descriptions.json'),
-    func_defs_json=pjoin(base_dir, 'cusparse_func_descriptions.json'),
-    func_description_generator_func=generate_func_descriptions_json,
-    force_update=False,
-    verbose=True)
-
+try:
+    from ._cusparse_ffi import ffi
+    from ._cusparse_ffi import lib as ffi_lib
+except:
+    """ Call wrap_library to wrap cuSPARSE.  This should only be slow the first
+    it is called.  After that the already compiled wrappers should be found. """
+    ffi, ffi_lib = wrap_library(
+        lib_name='_cusparse_ffi',
+        cffi_file=pjoin(base_dir, '_cusparse.cffi'),
+        python_wrapper_file=python_wrapper_file,
+        build_body_func=build_func_body,
+        ffi_init_func=ffi_init_cusparse,
+        cdef_generator_func=generate_cffi_cdef,
+        variable_defs_json=pjoin(base_dir, 'cusparse_variable_descriptions.json'),
+        func_defs_json=pjoin(base_dir, 'cusparse_func_descriptions.json'),
+        func_description_generator_func=generate_func_descriptions_json,
+        force_update=False,
+        verbose=True)
+    from ._cusparse_ffi import ffi
+    from ._cusparse_ffi import lib as ffi_lib
 
 class CUSPARSE_ERROR(Exception):
     """CUSPARSE error"""

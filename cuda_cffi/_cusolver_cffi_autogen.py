@@ -28,8 +28,8 @@ for hdr in cusolver_headers:
                       "Try defining CUDA_ROOT.")
 
 
-def ffi_init_cusolver(cffi_cdef):
-    return ffi_init(cffi_cdef, headers=cusolver_headers,
+def ffi_init_cusolver(lib_name, cffi_cdef):
+    return ffi_init(lib_name, cffi_cdef, headers=cusolver_headers,
                     libraries=['cusolver'])
 
 

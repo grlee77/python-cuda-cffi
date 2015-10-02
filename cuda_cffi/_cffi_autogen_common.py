@@ -24,6 +24,7 @@ import os
 import re
 import json
 import warnings
+import importlib
 import numpy as np
 
 import cffi
@@ -45,13 +46,15 @@ if not os.path.isdir(cuda_lib_path):
                          "CUDA_ROOT.")
 
 
-def ffi_init(cffi_cdef, headers=[], libraries=[],
+def ffi_init(lib_name, cffi_cdef, headers=[], libraries=[],
              include_dirs=[cuda_include_path], library_dirs=[cuda_lib_path],
              **kwargs):
     """ initialize FFI and FFILibrary objects using cffi
 
     Parameters
     ----------
+    lib_name : str
+        name of the cffi Out-of-Line module to be passed to ffi.set_source()
     cffi_cdef : str
         cffi cdef string
     headers : list of str, optional
@@ -74,16 +77,38 @@ def ffi_init(cffi_cdef, headers=[], libraries=[],
     ffi = cffi.FFI()
     ffi.cdef(cffi_cdef)
 
-    __verify_scr = ''
+    c_header_source = ''
     for hdr in headers:
-        __verify_scr += "#include <{}>\n".format(hdr)
+        c_header_source += "#include <{}>\n".format(hdr)
 
-    ffi_lib = ffi.verify(__verify_scr, libraries=libraries,
-                         include_dirs=include_dirs,
-                         library_dirs=library_dirs,
-                         **kwargs)
+    if cffi.__version__ > '1':
+        use_verify = False  # now depricated, so no longer use it
+    else:
+        use_verify = True  # now depricated, so no longer use it
 
-    return ffi, ffi_lib
+    if use_verify:
+        ffi_lib = ffi.verify(c_header_source, libraries=libraries,
+                             include_dirs=include_dirs,
+                             library_dirs=library_dirs,
+                             **kwargs)
+
+        return ffi, ffi_lib
+    else:
+        previous_dir = os.getcwd()
+        os.chdir(os.path.dirname(__file__))
+        # try:
+        #     from ._cusparse_ffi import ffi, lib
+        # except:
+        ffi.set_source(lib_name,
+                       c_header_source,
+                       libraries=libraries,
+                       include_dirs=include_dirs,
+                       library_dirs=library_dirs,
+                       **kwargs)
+        ffi.compile()
+        os.chdir(previous_dir)
+        mod = importlib.import_module('.' + lib_name, package='cuda_cffi')
+        return mod.ffi, mod.lib
 
 
 def get_cffi_filenames(ffi):
@@ -387,7 +412,7 @@ def generate_cffi_python_wrappers(cffi_cdef,
     return python_wrappers
 
 
-def wrap_library(cffi_file, python_wrapper_file, build_body_func,
+def wrap_library(lib_name, cffi_file, python_wrapper_file, build_body_func,
                  ffi_init_func, cdef_generator_func,
                  variable_defs_json=None, func_defs_json=None,
                  func_description_generator_func=None,
@@ -401,7 +426,7 @@ def wrap_library(cffi_file, python_wrapper_file, build_body_func,
         with open(cffi_file, 'r') as f:
             cffi_cdef = f.read()
 
-    ffi, ffi_lib = ffi_init_func(cffi_cdef)
+    ffi, ffi_lib = ffi_init_func(lib_name, cffi_cdef)
 
     if not os.path.exists(python_wrapper_file):
         if verbose:

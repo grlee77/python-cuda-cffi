@@ -38,8 +38,8 @@ if not os.path.exists(cusparse_header):
                       "location.  Try defining CUDA_ROOT")
 
 
-def ffi_init_cusparse(cffi_cdef):
-    return ffi_init(cffi_cdef, headers=[cusparse_header],
+def ffi_init_cusparse(lib_name, cffi_cdef):
+    return ffi_init(lib_name, cffi_cdef, headers=[cusparse_header],
                     libraries=['cusparse'])
 
 
