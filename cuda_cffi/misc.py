@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Miscellaneous functions.
+Miscellaneous functions.  Similar implementation to scikit.cuda.misc
 """
 
 from __future__ import absolute_import
