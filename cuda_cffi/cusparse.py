@@ -1335,7 +1335,7 @@ class CSR(object):
     """
     @property
     def A(self):
-        "The transpose operator."
+        "Return in dense format."
         return self.todense()
 
     @property
@@ -1350,17 +1350,17 @@ class CSR(object):
 
     @property
     def real(self):
-        "The transpose operator."
+        "real component."
         return self._real()
 
     @property
     def imag(self):
-        "The transpose operator."
+        "imaginary component."
         return self._imag()
 
     @property
     def size(self):
-        "The adjoint operator."
+        "number of nonzero elements."
         return self.getnnz()
 
     @property
