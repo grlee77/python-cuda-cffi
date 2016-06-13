@@ -163,7 +163,7 @@
     "transXY": "enumerated operation type, op(X) and op(Y)",
     "transa": "enumerated operation type, op(A)",
     "transb": "enumerated operation type, op(B)",
-    "type": "enumerated matrix type",
+    "type": "enumerated type",
     "userEllWidth": "width of the regular (ELL) part of the matrix in HYB format, which should be less than the maximum number of nonzeros per row and is only required if partitionType == CUSPARSE_HYB_PARTITION_USER",
     "version": "library version number",
     "x": "vector",
@@ -180,5 +180,15 @@
     "p": "integer array of nnz unsorted map indices. To construct csrVal, the user has to set P=0:1:(nnz-1).",
     "P": "integer array of nnz unsorted map indices. To construct cooVal, the user has to set P=0:1:(nnz-1).",
     "cooRowsA": "integer array of nnz unsorted row indices of A. ",
-    "cooColsA": "integer array of nnz unsorted column indices of A. "
+    "cooColsA": "integer array of nnz unsorted column indices of A. ",
+    "value": "property value",
+    "alg": "algorithm",
+    "src": "source",
+    "dest": "destination",
+    "executiontype": "TODO: See NVIDIA DOCS",
+    "alphatype": "TODO: See NVIDIA DOCS",
+    "betatype": "TODO: See NVIDIA DOCS",
+    "xtype": "TODO: See NVIDIA DOCS",
+    "ytype": "TODO: See NVIDIA DOCS",
+    "bufferSizeInBytes": "number of bytes of the buffer used"
 }

@@ -263,12 +263,43 @@ def generate_func_descriptions_json(ffi_lib, json_file):
     for t in ['S', 'D']:  # real only
         # Dense linear solver routines
         func_descriptions['cusolverDn' + t + 'ormqr'] = 'overwrite mxn matrix C by either op(Q)*C  or C*op(Q)'
-        # Undocumented Dense routines
-        func_descriptions['cusolverDn' + t + 'sytrd'] = ''
+        # added in CUDA 8.0
+        func_descriptions['cusolverDn' + t + 'ormqr_bufferSize'] = 'buffer size of ormqr'
+        func_descriptions['cusolverDn' + t + 'orgqr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'orgqr_bufferSize'] = 'buffer size of orgqr'
+        func_descriptions['cusolverDn' + t + 'orgbr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'orgbr_bufferSize'] = 'buffer size of orgbr'
+        func_descriptions['cusolverDn' + t + 'orgtr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'orgtr_bufferSize'] = 'buffer size of orgtr'
+        func_descriptions['cusolverDn' + t + 'ormtr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'ormtr_bufferSize'] = 'buffer size of ormtr'
+        func_descriptions['cusolverDn' + t + 'sytrd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'sytrd_bufferSize'] = 'buffer size of sytrd'
+        func_descriptions['cusolverDn' + t + 'syevd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'syevd_bufferSize'] = 'buffer size of syevd'
+        func_descriptions['cusolverDn' + t + 'sygvd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'sygvd_bufferSize'] = 'buffer size of sygvd'
 
     for t in ['C', 'Z']:  # complex only
         # Dense linear solver routines
         func_descriptions['cusolverDn' + t + 'unmqr'] = 'overwrite mxn matrix C by either op(Q)*C  or C*op(Q)'
+
+        # added in CUDA 8.0
+        func_descriptions['cusolverDn' + t + 'unmqr_bufferSize'] = 'buffer size of ormqr'
+        func_descriptions['cusolverDn' + t + 'ungqr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'ungqr_bufferSize'] = 'buffer size of ungqr'
+        func_descriptions['cusolverDn' + t + 'ungbr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'ungbr_bufferSize'] = 'buffer size of ungbr'
+        func_descriptions['cusolverDn' + t + 'ungtr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'ungtr_bufferSize'] = 'buffer size of ungtr'
+        func_descriptions['cusolverDn' + t + 'unmtr'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'unmtr_bufferSize'] = 'buffer size of unmtr'
+        func_descriptions['cusolverDn' + t + 'hetrd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'hetrd_bufferSize'] = 'buffer size of hetrd'
+        func_descriptions['cusolverDn' + t + 'heevd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'heevd_bufferSize'] = 'buffer size of heevd'
+        func_descriptions['cusolverDn' + t + 'hegvd'] = 'TODO'
+        func_descriptions['cusolverDn' + t + 'hegvd_bufferSize'] = 'buffer size of hegvd'
 
     for t in ['S', 'D', 'C', 'Z']:  # general routines
         # Dense linear solver routines
@@ -307,6 +338,10 @@ def generate_func_descriptions_json(ffi_lib, json_file):
         # Sparse low level routines
         func_descriptions['cusolverSp' + t + 'csrqrBufferInfoBatched'] = 'calculate buffer information for csrqrsvBatched'
         func_descriptions['cusolverSp' + t + 'csrqrsvBatched'] = 'batched sparse QR factorization for solving either a set of least-squares problems or a set of linear systems'
+
+
+
+
 
     # operations common across all precisions
     func_descriptions['cusolverSpXcsrissymHost'] = 'Check if A has a symmetric pattern'

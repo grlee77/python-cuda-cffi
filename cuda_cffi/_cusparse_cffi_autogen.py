@@ -361,7 +361,18 @@ def generate_func_descriptions_json(ffi_lib, json_file):
         func_descriptions['cusparse' + t + 'csrsv2_bufferSizeExt'] = 'return size of buffer used in csrsv2'
         func_descriptions['cusparse' + t + 'gebsr2gebsc_bufferSizeExt'] = 'return gebsr2gebsc buffer size'
         func_descriptions['cusparse' + t + 'gebsr2gebsr_bufferSizeExt'] = 'return gebsr2gebsr or gebsr2gebsrNnz buffer size'
+        func_descriptions['cusparse' + t + 'csrmv_mp'] = 'TODO'
+        func_descriptions['cusparse' + t + 'gemmi'] = 'TODO'
+        func_descriptions['cusparse' + t + 'nnz_compress'] = 'TODO'
+        func_descriptions['cusparse' + t + 'csr2csr_compress'] = 'TODO'
 
+    for t in ['S', 'D']:
+        # operations only defined for real types
+        pass
+
+    for t in ['C', 'Z']:
+        # operations only defined for complex types
+        pass
 
     # operations common across all precisions below here
     # for CUDA 5.0+
@@ -387,7 +398,14 @@ def generate_func_descriptions_json(ffi_lib, json_file):
     # func_descriptions['cusparseColorInfo'] = "Opaque structures holding coloring information"
     # func_descriptions['cusparseCreateCsru2csrInfo'] = "Opaque structures holding sorting information"
     # func_descriptions['cusparseDestroyCsru2csrInfo'] = "Opaque structures holding sorting information"
-
+    # for CUDA 8.0+
+    func_descriptions['cusparseCopyMatDescr'] = 'copy cusparseMatDescr_t from src to dest'
+    func_descriptions['cusparseCsrmvEx'] = 'TODO'
+    func_descriptions['cusparseCsrmvEx_bufferSize'] = 'buffer size for cusparseCsrmvEx'
+    func_descriptions['cusparseCsrsv_analysisEx'] = 'TODO'
+    func_descriptions['cusparseCsrsv_solveEx'] = 'TODO'
+    func_descriptions['cusparseCsrilu0Ex'] = 'TODO'
+    func_descriptions['cusparseCsr2cscEx'] = 'TODO'
 
     create_funcs = [cdef for cdef in ffi_lib.__dict__ if 'Create' in cdef]
     for func in create_funcs:

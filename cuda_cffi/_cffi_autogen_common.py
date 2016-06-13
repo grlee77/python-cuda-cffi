@@ -27,7 +27,10 @@ import warnings
 import importlib
 import numpy as np
 
-import cffi
+try:
+    import cffi
+except ImportError:
+    raise ImportError("Failed to import cffi")
 
 # TODO: improve autodetection of necessary cuda paths
 CUDA_ROOT = os.environ.get('CUDA_ROOT', None) or '/usr/local/cuda'
