@@ -10,20 +10,21 @@ from os.path import join as pjoin
 
 import numpy as np  # don't remove!  is used during call to exec() below
 
-from ._cffi_autogen_common import wrap_library
-from ._cusolver_cffi_autogen import (
+import cuda_cffi
+from cuda_cffi._cffi_autogen_common import wrap_library
+from cuda_cffi._cusolver_cffi_autogen import (
     generate_cffi_cdef,
     ffi_init_cusolver,
     build_func_body,
     generate_func_descriptions_json)
 
-base_dir = os.path.dirname(__file__)
+base_dir = os.path.dirname(cuda_cffi.__file__)
 python_wrapper_file = pjoin(base_dir, '_cusolver_python.py')
 
 try:
-    from ._cusolver_ffi import ffi
-    from ._cusolver_ffi import lib as ffi_lib
-except:
+    from cuda_cffi._cusolver_ffi import ffi
+    from cuda_cffi._cusolver_ffi import lib as ffi_lib
+except ImportError:
     print("IMPORT FAILED.  NEED TO BUILD")
 
     """ Call wrap_library to wrap cuSOLVER.  This should only be slow the first
@@ -41,8 +42,8 @@ except:
         func_description_generator_func=generate_func_descriptions_json,
         force_update=False,
         verbose=True)
-    from ._cusolver_ffi import ffi
-    from ._cusolver_ffi import lib as ffi_lib
+    from cuda_cffi._cusolver_ffi import ffi
+    from cuda_cffi._cusolver_ffi import lib as ffi_lib
 
 class CUSOLVER_ERROR(Exception):
     """CUSOLVER error"""

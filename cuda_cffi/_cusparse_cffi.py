@@ -10,19 +10,20 @@ from os.path import join as pjoin
 
 import numpy as np  # don't remove!  is used during call to exec() below
 
-from ._cffi_autogen_common import wrap_library
-from ._cusparse_cffi_autogen import (
+import cuda_cffi
+from cuda_cffi._cffi_autogen_common import wrap_library
+from cuda_cffi._cusparse_cffi_autogen import (
     generate_cffi_cdef,
     ffi_init_cusparse,
     build_func_body,
     generate_func_descriptions_json)
 
-base_dir = os.path.dirname(__file__)
+base_dir = os.path.dirname(cuda_cffi.__file__)
 python_wrapper_file = pjoin(base_dir, '_cusparse_python.py')
 
 try:
-    from ._cusparse_ffi import ffi
-    from ._cusparse_ffi import lib as ffi_lib
+    from cuda_cffi._cusparse_ffi import ffi
+    from cuda_cffi._cusparse_ffi import lib as ffi_lib
 except:
     """ Call wrap_library to wrap cuSPARSE.  This should only be slow the first
     it is called.  After that the already compiled wrappers should be found. """
@@ -38,8 +39,8 @@ except:
         func_description_generator_func=generate_func_descriptions_json,
         force_update=False,
         verbose=True)
-    from ._cusparse_ffi import ffi
-    from ._cusparse_ffi import lib as ffi_lib
+    from cuda_cffi._cusparse_ffi import ffi
+    from cuda_cffi._cusparse_ffi import lib as ffi_lib
 
 class CUSPARSE_ERROR(Exception):
     """CUSPARSE error"""
