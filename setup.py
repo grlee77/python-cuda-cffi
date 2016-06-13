@@ -35,10 +35,9 @@ if __name__ == "__main__":
           author_email='grlee77@gmail.com',
           url='https://github.com/grlee77/cuda_cffi',
           license='BSD',
-          packages=['cuda_cffi'],
-          # Force installation of __init__.py in namespace package:
-          data_files = [('cuda_cffi',
-            ['cuda_cffi/cusparse_variable_descriptions.json',
-             'cuda_cffi/cusolver_variable_descriptions.json'])],
+          packages=['cuda_cffi',
+                    'cuda_cffi.tests'],
+          package_data = {'cuda_cffi': ['cusparse_variable_descriptions.json',
+                                        'cusolver_variable_descriptions.json']},
           install_requires = install_requires,
           extras_require = extras_require)
