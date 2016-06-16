@@ -4,7 +4,6 @@ Autogenerate Python interface to cuSOLVER functions.
 """
 from __future__ import absolute_import, print_function
 
-import os
 import re
 from os.path import join as pjoin
 
@@ -18,7 +17,7 @@ from cuda_cffi._cusolver_cffi_autogen import (
     build_func_body,
     generate_func_descriptions_json)
 
-base_dir = os.path.dirname(cuda_cffi.__file__)
+base_dir = cuda_cffi.__path__[0]
 python_wrapper_file = pjoin(base_dir, '_cusolver_python.py')
 
 try:
