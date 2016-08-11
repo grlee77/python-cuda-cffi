@@ -24,10 +24,10 @@ try:
     from cuda_cffi._cusolver_ffi import ffi
     from cuda_cffi._cusolver_ffi import lib as ffi_lib
 except ImportError:
-    print("IMPORT FAILED.  NEED TO BUILD")
+    print("BUILDING CUSOLVER INTERFACE")
 
-    """ Call wrap_library to wrap cuSOLVER.  This should only be slow the first
-    it is called.  After that the already compiled wrappers should be found. """
+    """Call wrap_library to wrap cuSOLVER.  This should only be slow the first
+    it is called.  After that the already compiled wrappers should be found."""
     ffi, ffi_lib = wrap_library(
         lib_name='_cusolver_ffi',
         cffi_file=pjoin(base_dir, '_cusolver.cffi'),

@@ -4,10 +4,10 @@ from cuda_cffi.cusparse import *
 from cuda_cffi.cusparse import (_csrgeamNnz, _csrgemmNnz)
 
 from cuda_cffi import cusparse
-cusparse.init()
 
 import numpy as np
-from numpy.testing import assert_raises, assert_equal, assert_almost_equal
+from numpy.testing import (run_module_suite, assert_raises, assert_equal,
+                           assert_almost_equal)
 
 from unittest import skipIf
 
@@ -16,6 +16,8 @@ import pycuda.gpuarray as gpuarray
 import pycuda.driver as drv
 
 import scipy.sparse  # TODO: refactor to remove this
+
+cusparse.init()
 
 cusparse_real_dtypes = [np.float32, np.float64]
 cusparse_complex_dtypes = [np.complex64, np.complex128]
@@ -1058,3 +1060,7 @@ def test_CSR_gemm():
                 assert_almost_equal(C_CSR.todense(to_cpu=True), C_cpu)
     finally:
         cusparseDestroy(h)
+
+
+if __name__ == "__main__":
+    run_module_suite()

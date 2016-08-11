@@ -24,8 +24,10 @@ try:
     from cuda_cffi._cusparse_ffi import ffi
     from cuda_cffi._cusparse_ffi import lib as ffi_lib
 except:
-    """ Call wrap_library to wrap cuSPARSE.  This should only be slow the first
-    it is called.  After that the already compiled wrappers should be found. """
+    print("BUILDING CUSPARSE INTERFACE")
+
+    """Call wrap_library to wrap cuSPARSE.  This should only be slow the first
+    it is called.  After that the already compiled wrappers should be found."""
     ffi, ffi_lib = wrap_library(
         lib_name='_cusparse_ffi',
         cffi_file=pjoin(base_dir, '_cusparse.cffi'),

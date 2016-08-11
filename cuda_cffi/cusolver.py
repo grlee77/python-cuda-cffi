@@ -22,7 +22,7 @@ your CUDA installation.
 # import low level cuSOLVER python wrappers and constants
 
 try:
-    from ._cusolver_cffi import *
+    from cuda_cffi._cusolver_cffi import *
 except Exception as e:
     print(repr(e))
     estr = "autogenerattion and import of cuSOLVER wrappers failed\n"
