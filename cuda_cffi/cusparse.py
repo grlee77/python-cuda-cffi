@@ -433,6 +433,10 @@ def csc2csr(m, n, cscVal, cscColPtr, cscRowInd, handle=None, nnz=None,
     return csrVal, csrRowPtr, csrColInd
 
 
+# TODO: add support for cusparseCsrmvEx/cusparseCsrmvEx_bufferSize routines
+# TODO: add support for cusparse<t>csrmv_mp routines  (need to compare speed.
+#     (mv_mp routines should be faster for transposed operation, etc.)
+#      see:  http://docs.nvidia.com/cuda/cusparse/index.html
 def csrmv(descrA, csrValA, csrRowPtrA, csrColIndA, m, n, x, handle=None,
           nnz=None, transA=CUSPARSE_OPERATION_NON_TRANSPOSE, alpha=1.0,
           beta=0.0, y=None, check_inputs=True):
