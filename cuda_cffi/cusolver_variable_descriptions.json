@@ -22,6 +22,7 @@
     "S": "two-dimensional array (matrix) S",
     "U": "two-dimensional array (matrix) U",
     "VT": "two-dimensional array (matrix) VT",
+    "W": "TODO",
     "XF": "two-dimensional array (matrix) XF",
     "XF_array": "two-dimensional array (matrix) XF_array",
     "b": "vector. see NVIDIA docs",
@@ -76,6 +77,7 @@
     "k": "number of elementary reflections.",
     "jobu": "see NVIDIA docs",
     "jobvt": "see NVIDIA docs",
+    "jobz": "see NVIDIA docs",
     "tol": "tolerance",
     "issym": "1 if A is symmetric; 0 otherwise",
     "singularity": "-1 if A is invertible. Otherwise, first index j such that U(j,j)≈0",
@@ -138,5 +140,8 @@
     "csrEndPtrA": "see NVIDIA docs",
     "maxite": "see NVIDIA docs",
     "eps": "see NVIDIA docs",
+    "itype": "see NVIDIA docs",
+    "type": "see NVIDIA docs",
+    "value": "see NVIDIA docs",
     "bufferSizeInBytes": "size of buffer in bytes"
 }

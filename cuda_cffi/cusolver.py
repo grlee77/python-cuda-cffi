@@ -6,7 +6,7 @@ import pycuda.autoinit
 import pycuda.gpuarray as gpuarray
 import pycuda.driver as drv
 
-from .misc import init
+from cuda_cffi.misc import init
 
 toolkit_version = drv.get_version()
 

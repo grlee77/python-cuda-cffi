@@ -71,6 +71,21 @@ for k, v in ffi_lib.__dict__.items():
         # print("k={}, v={}".format(k,v))
         vars()[k] = v
 
+# enums from libraryPropertyType (added for CUDA 8.0)
+if 'MAJOR_VERSION' in ffi_lib.__dict__:
+    vars()['MAJOR_VERSION'] = ffi_lib.__dict__['MAJOR_VERSION']
+if 'MINOR_VERSION' in ffi_lib.__dict__:
+    vars()['MINOR_VERSION'] = ffi_lib.__dict__['MINOR_VERSION']
+if 'PATCH_LEVEL' in ffi_lib.__dict__:
+    vars()['PATCH_LEVEL'] = ffi_lib.__dict__['PATCH_LEVEL']
+
+# match enums corresponding to cudaDataType (added for CUDA 8.0)
+regex = 'CUDA_[RC]_.'
+for k, v in ffi_lib.__dict__.items():
+    if re.match(regex, k):
+        # print("k={}, v={}".format(k,v))
+        vars()[k] = v
+
 
 def cusolverCheckStatus(status):
     """
@@ -110,3 +125,7 @@ __all__.append('CUSOLVER_EXCEPTIONS')
 __all__.append('cusolverCheckStatus')
 __all__.append('ffi')
 __all__.append('ffi_lib')
+
+#__all__.remove('cusolverDnSsytrd_bufferSize')
+#__all__.remove('cusolverDnCheevd')
+#__all__.remove('cusolverDnSsyevd')

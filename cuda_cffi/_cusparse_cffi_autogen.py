@@ -111,6 +111,31 @@ def generate_cffi_cdef(
     typedef cuComplex cufftComplex;
     typedef cuDoubleComplex cufftDoubleComplex;
 
+    typedef enum cudaDataType_t
+    {
+        CUDA_R_16F= 2, // real as a half
+        CUDA_C_16F= 6, // complex as a pair of half numbers
+        CUDA_R_32F= 0, // real as a float
+        CUDA_C_32F= 4, // complex as a pair of float numbers
+        CUDA_R_64F= 1, // real as a double
+        CUDA_C_64F= 5, // complex as a pair of double numbers
+        CUDA_R_8I= 3,  // real as a signed char
+        CUDA_C_8I= 7,   // complex as a pair of signed char numbers
+        CUDA_R_8U= 8,  // real as a unsigned char
+        CUDA_C_8U= 9,  // complex as a pair of unsigned char numbers
+        CUDA_R_32I= 10,  // real as a signed int
+        CUDA_C_32I= 11,  // complex as a pair of signed int numbers
+        CUDA_R_32U= 12,  // real as a unsigned int
+        CUDA_C_32U= 13   // complex as a pair of unsigned int numbers
+    } cudaDataType;
+
+    typedef enum libraryPropertyType_t  //GRL: added this for cuda 8.0
+    {
+        MAJOR_VERSION,
+        MINOR_VERSION,
+        PATCH_LEVEL
+    } libraryPropertyType;
+
     /* definitions from cusparse header below this point */
     """
 
@@ -361,10 +386,10 @@ def generate_func_descriptions_json(ffi_lib, json_file):
         func_descriptions['cusparse' + t + 'csrsv2_bufferSizeExt'] = 'return size of buffer used in csrsv2'
         func_descriptions['cusparse' + t + 'gebsr2gebsc_bufferSizeExt'] = 'return gebsr2gebsc buffer size'
         func_descriptions['cusparse' + t + 'gebsr2gebsr_bufferSizeExt'] = 'return gebsr2gebsr or gebsr2gebsrNnz buffer size'
-        func_descriptions['cusparse' + t + 'csrmv_mp'] = 'TODO'
-        func_descriptions['cusparse' + t + 'gemmi'] = 'TODO'
-        func_descriptions['cusparse' + t + 'nnz_compress'] = 'TODO'
-        func_descriptions['cusparse' + t + 'csr2csr_compress'] = 'TODO'
+        func_descriptions['cusparse' + t + 'csrmv_mp'] = 'see NVIDIA docs'
+        func_descriptions['cusparse' + t + 'gemmi'] = 'see NVIDIA docs'
+        func_descriptions['cusparse' + t + 'nnz_compress'] = 'see NVIDIA docs'
+        func_descriptions['cusparse' + t + 'csr2csr_compress'] = 'see NVIDIA docs'
 
     for t in ['S', 'D']:
         # operations only defined for real types
@@ -400,12 +425,12 @@ def generate_func_descriptions_json(ffi_lib, json_file):
     # func_descriptions['cusparseDestroyCsru2csrInfo'] = "Opaque structures holding sorting information"
     # for CUDA 8.0+
     func_descriptions['cusparseCopyMatDescr'] = 'copy cusparseMatDescr_t from src to dest'
-    func_descriptions['cusparseCsrmvEx'] = 'TODO'
+    func_descriptions['cusparseCsrmvEx'] = 'see NVIDIA docs'
     func_descriptions['cusparseCsrmvEx_bufferSize'] = 'buffer size for cusparseCsrmvEx'
-    func_descriptions['cusparseCsrsv_analysisEx'] = 'TODO'
-    func_descriptions['cusparseCsrsv_solveEx'] = 'TODO'
-    func_descriptions['cusparseCsrilu0Ex'] = 'TODO'
-    func_descriptions['cusparseCsr2cscEx'] = 'TODO'
+    func_descriptions['cusparseCsrsv_analysisEx'] = 'see NVIDIA docs'
+    func_descriptions['cusparseCsrsv_solveEx'] = 'see NVIDIA docs'
+    func_descriptions['cusparseCsrilu0Ex'] = 'see NVIDIA docs'
+    func_descriptions['cusparseCsr2cscEx'] = 'see NVIDIA docs'
 
     create_funcs = [cdef for cdef in ffi_lib.__dict__ if 'Create' in cdef]
     for func in create_funcs:

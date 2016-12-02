@@ -18,7 +18,10 @@ from ._cffi_autogen_common import (
     get_variable_descriptions, get_function_descriptions, CUDA_ROOT, ffi_init,
     cuda_include_path, reindent, split_line, generate_cffi_python_wrappers)
 
-cusolver_headers = [os.path.join(cuda_include_path, 'cusolver_common.h'),
+# CUDA 8.0: had to add host_defines.h too for __align__(2), etc. to work
+# cusparse happens to already include host_defines.h indirectly via cusparse.h
+cusolver_headers = [os.path.join(cuda_include_path, 'host_defines.h'),
+                    os.path.join(cuda_include_path, 'cusolver_common.h'),
                     os.path.join(cuda_include_path, 'cusolverDn.h'),
                     os.path.join(cuda_include_path, 'cusolverRf.h'),
                     os.path.join(cuda_include_path, 'cusolverSp.h')]
@@ -29,16 +32,37 @@ for hdr in cusolver_headers:
 
 
 def ffi_init_cusolver(lib_name, cffi_cdef):
+    # TODO: CUDA 8.0's cusolver library seems to require linking to OpenMP!
+    #       how to handle this robustly across platforms?
     return ffi_init(lib_name, cffi_cdef, headers=cusolver_headers,
-                    libraries=['cusolver'])
+                    libraries=['cusolver'],
+                    extra_compile_args=['-fopenmp'],
+                    extra_link_args=['-fopenmp'])
 
+
+# TODO: CUDA 8.0
+# The following 8 functions are in cusolverDn.h, but are not present in the
+# cusolver library (/usr/local/cuda/targets/x86_64-linux/lib/libcusolver.so)
+# This was reported as an issue here:
+#     https://devtalk.nvidia.com/default/topic/963556/missing-functions-in-cusolver/?offset=4
+
+# Temporary Workaround:  comment out these 8 function definitions in cusolverDn.h!
+
+# cusolverDnSormtr_bufferSize
+# cusolverDnDormtr_bufferSize
+# cusolverDnCunmtr_bufferSize
+# cusolverDnZunmtr_bufferSize
+# cusolverDnSormtr
+# cusolverDnDormtr
+# cusolverDnCunmtr
+# cusolverDnZunmtr
 
 def generate_cffi_cdef(
         cuda_include_path=cuda_include_path,
-        cusolver_common_header=cusolver_headers[0],
-        cusolverDn_header=cusolver_headers[1],
-        cusolverSp_header=cusolver_headers[2],
-        cusolverRf_header=cusolver_headers[3],
+        cusolver_common_header=cusolver_headers[1],
+        cusolverDn_header=cusolver_headers[2],
+        cusolverSp_header=cusolver_headers[3],
+        cusolverRf_header=cusolver_headers[4],
         cffi_out_file=None):
     """ generate the CUSOLVER FFI definition
 
@@ -120,9 +144,15 @@ def generate_cffi_cdef(
         CUBLAS_OP_C=2
     } cublasOperation_t;
 
+    typedef enum libraryPropertyType_t  //GRL: added this for cuda 8.0
+    {
+        MAJOR_VERSION,
+        MINOR_VERSION,
+        PATCH_LEVEL
+    } libraryPropertyType;
+
     /* definitions from cusolver header below this point */
     """
-
     for hdr in all_hdr:
         cffi_cdef += ''.join(hdr)
 

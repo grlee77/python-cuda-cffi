@@ -90,7 +90,8 @@ def ffi_init(lib_name, cffi_cdef, headers=[], libraries=[],
         use_verify = True  # now depricated, so no longer use it
 
     if use_verify:
-        ffi_lib = ffi.verify(c_header_source, libraries=libraries,
+        ffi_lib = ffi.verify(c_header_source,
+                             libraries=libraries,
                              include_dirs=include_dirs,
                              library_dirs=library_dirs,
                              **kwargs)
@@ -99,9 +100,6 @@ def ffi_init(lib_name, cffi_cdef, headers=[], libraries=[],
     else:
         previous_dir = os.getcwd()
         os.chdir(os.path.dirname(__file__))
-        # try:
-        #     from ._cusparse_ffi import ffi, lib
-        # except:
         ffi.set_source(lib_name,
                        c_header_source,
                        libraries=libraries,
@@ -376,7 +374,11 @@ def generate_cffi_python_wrappers(cffi_cdef,
     # find lines containing a function definition
     func_def_lines = []
     for idx, line in enumerate(cffi_cdef_list):
-        if line.startswith('cusolver') or line.startswith('cusparse'):  # TODO: fix this!
+        # this loop matches each line containing the start of a function definition
+        # if ('CUSOLVERAPI' in line) or ('CUSPARSEAPI' in line):
+        if (line.startswith('cusolver') or
+                line.lstrip().startswith('cusparse')) and \
+                ('(' in line):  # TODO: fix this!
             func_def_lines.append(idx)
 
     # reformat each definition into a single line for easier string processing
