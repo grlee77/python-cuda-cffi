@@ -25,7 +25,7 @@ try:
     from cuda_cffi._cusolver_cffi import *
 except Exception as e:
     print(repr(e))
-    estr = "autogenerattion and import of cuSOLVER wrappers failed\n"
+    estr = "autogeneration and import of cuSOLVER wrappers failed\n"
     estr += ("Try setting the CUDA_ROOT environment variable to the base of "
              "your CUDA installation.  The autogeneration script tries to "
              "find the CUSOLVER headers in CUDA_ROOT/include/\n")

@@ -266,6 +266,12 @@ def build_func_body(func_name, arg_dict, return_type):
     else:
         # check cusparseStatus_t state before returning
         call_str = "status = ffi_lib.%s(%s)\n" % (func_name, arg_list)
+        if 'StridedBatch' in func_name:
+            print("func_name: {}".format(func_name))
+            print("arg_list: {}".format(arg_list))
+            print("call_str: {}".format(call_str))
+            print("split_line(call_str, break_pattern=', ', nmax=76): {}".format(split_line(call_str, break_pattern=', ', nmax=76)))
+
         body += split_line(call_str, break_pattern=', ', nmax=76)
         body += "cusparseCheckStatus(status)\n"
         if is_return:

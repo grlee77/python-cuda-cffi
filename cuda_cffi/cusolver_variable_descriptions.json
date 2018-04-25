@@ -143,5 +143,15 @@
     "itype": "see NVIDIA docs",
     "type": "see NVIDIA docs",
     "value": "see NVIDIA docs",
-    "bufferSizeInBytes": "size of buffer in bytes"
+    "bufferSizeInBytes": "size of buffer in bytes",
+    "tolerance": "see NVIDIA docs",
+    "max_sweeps": "see NVIDIA docs",
+    "sort_eig": "see NVIDIA docs",
+    "residual": "see NVIDIA docs",
+    "executed_sweeps": "see NVIDIA docs",
+    "V": "see NVIDIA docs",
+    "params": "see NVIDIA docs",
+    "ldv": "see NVIDIA docs",
+    "econ": "see NVIDIA docs",
+    "sort_svd": "see NVIDIA docs"
 }

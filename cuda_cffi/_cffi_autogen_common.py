@@ -190,7 +190,7 @@ def split_line(line, break_pattern=', ', nmax=80, pad_char='('):
     lines = []
     lines.append(line[:break_loc].rstrip())
     line = ' ' * npad + line[break_loc:]
-    while (len(line) > nmax - 1) and (break_loc is not None):
+    while (len(line) > nmax - 1) and (break_loc is not None) and break_pattern in line:
         locs, break_loc = _find_breakpoint(line,
                                            break_pattern=break_pattern,
                                            nmax=nmax)

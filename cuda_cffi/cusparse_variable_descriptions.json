@@ -145,6 +145,7 @@
     "nnz": "number of non-zero elements",
     "nnzA": "number of non-zero elements of matrix A",
     "nnzB": "number of non-zero elements of matrix B",
+    "nnzC": "number of non-zero elements of matrix C",
     "nnzD": "number of non-zero elements of matrix D",
     "nnzPerCol": "array of size n containing the number of nonzero elements per column",
     "nnzPerRow": "array of size n containing the number of nonzero elements per row",
@@ -161,6 +162,8 @@
     "outVal": "TODO",
     "pBuffer": "buffer allocated by the user",
     "pBufferSize": "number of bytes of the buffer used",
+    "BufferSizeInBytes": "number of bytes of the buffer used",
+    "bufferSizeInBytes": "number of bytes of the buffer used",
     "pBufferSizeInBytes": "number of bytes of the buffer used",
     "pInputBuffer": "library version number",
     "partitionType": "partitioning method to be used in the conversion",
@@ -210,6 +213,5 @@
     "alphatype": "TODO: See NVIDIA DOCS",
     "betatype": "TODO: See NVIDIA DOCS",
     "xtype": "TODO: See NVIDIA DOCS",
-    "ytype": "TODO: See NVIDIA DOCS",
-    "bufferSizeInBytes": "number of bytes of the buffer used"
+    "ytype": "TODO: See NVIDIA DOCS"
 }

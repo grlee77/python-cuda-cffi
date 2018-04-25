@@ -369,6 +369,10 @@ def generate_func_descriptions_json(ffi_lib, json_file):
         func_descriptions['cusolverSp' + t + 'csrqrBufferInfoBatched'] = 'calculate buffer information for csrqrsvBatched'
         func_descriptions['cusolverSp' + t + 'csrqrsvBatched'] = 'batched sparse QR factorization for solving either a set of least-squares problems or a set of linear systems'
 
+        # added in CUDA 9
+        func_descriptions['cusolverDn' + t + 'potrfBatched'] = 'compute batched Cholesky factorization of a Hermitian positive-definite matrix'
+        func_descriptions['cusolverDn' + t + 'potrsBatched'] = 'batched solver for a system of linear equations A*X = B where A is nxn Hermitian'
+
 
 
 
