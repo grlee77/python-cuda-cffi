@@ -25,7 +25,8 @@ import json
 
 from ._cffi_autogen_common import (
     get_variable_descriptions, get_function_descriptions, CUDA_ROOT, ffi_init,
-    cuda_include_path, reindent, split_line, generate_cffi_python_wrappers)
+    cuda_include_path, reindent, split_line, generate_cffi_python_wrappers,
+    _remove_comment)
 
 
 # on versions where cusparse_v2.h exists, use it
@@ -73,6 +74,8 @@ def generate_cffi_cdef(
             cusparse_header = os.path.join(cuda_include_path, 'cusparse.h')
             with open(cusparse_header, 'r') as f:
                 cusparse_hdr = f.readlines()
+
+    cusparse_hdr = [_remove_comment(l) for l in cusparse_hdr]
 
     # skip lines leading up to first typedef
     for idx, line in enumerate(cusparse_hdr):

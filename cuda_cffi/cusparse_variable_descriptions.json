@@ -209,9 +209,14 @@
     "alg": "algorithm",
     "src": "source",
     "dest": "destination",
-    "executiontype": "TODO: See NVIDIA DOCS",
+    "executiontype": "execution type",
     "alphatype": "TODO: See NVIDIA DOCS",
     "betatype": "TODO: See NVIDIA DOCS",
     "xtype": "TODO: See NVIDIA DOCS",
-    "ytype": "TODO: See NVIDIA DOCS"
+    "ytype": "TODO: See NVIDIA DOCS",
+    "ds": "TODO: See NVIDIA DOCS",
+    "dw": "TODO: See NVIDIA DOCS",
+    "algo": "algorithm",
+    "workspace": "workspace",
+    "nrhs": "TODO: See NVIDIA DOCS"
 }

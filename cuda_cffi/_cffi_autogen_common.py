@@ -112,6 +112,16 @@ def ffi_init(lib_name, cffi_cdef, headers=[], libraries=[],
         return mod.ffi, mod.lib
 
 
+def _remove_comment(ln):
+    # remove single line /* */ comment within the function definition of cusparseScsrsm2_bufferSizeExt
+    cstart = ln.find('/*')
+    cend = ln.find('*/')        
+    if cstart > -1 and cend > -1:
+        ln = ln[:cstart] + ln[cend+2:]
+    ln.strip()
+    return ln
+
+
 def get_cffi_filenames(ffi):
     """ returns the source and module filenames """
     sourcefilename = ffi.verifier.sourcefilename
@@ -202,6 +212,7 @@ def split_line(line, break_pattern=', ', nmax=80, pad_char='('):
 
 def _find_breakpoint(line, break_pattern=', ', nmax=80):
     """ determine where to break the line """
+    line = _remove_comment(line)
     locs = [m.start() for m in re.finditer(break_pattern, line)]
     if len(locs) > 0:
         break_loc = locs[np.where(
@@ -232,6 +243,7 @@ def _build_func_sig(func_name, arg_dict, return_type):
             continue
         sig += k + ", "
     sig = sig[:-2] + "):\n"
+    sig = _remove_comment(sig)
     # wrap to 2nd line if too long
     return split_line(sig, break_pattern=', ', nmax=79)
 
@@ -388,11 +400,12 @@ def generate_cffi_python_wrappers(cffi_cdef,
         loc1 = func_def_lines[i]
         if i < n_funcs - 1:
             loc2 = func_def_lines[i + 1]
-            cdef = ' '.join([l.strip() for l in cffi_cdef_list[loc1:loc2]])
+            cdef = ' '.join([_remove_comment(l) for l in cffi_cdef_list[loc1:loc2]])
         else:
-            cdef = ' '.join([l.strip() for l in cffi_cdef_list[loc1:]])
+            cdef = ' '.join([_remove_comment(l) for l in cffi_cdef_list[loc1:]])
         # strip any remaining comments after the semicolon
         cdef = cdef[:cdef.find(';') + 1]
+
         cdef_list.append(cdef)
 
     # read function and variable definition strings to use when building the
@@ -405,6 +418,7 @@ def generate_cffi_python_wrappers(cffi_cdef,
     # build the wrappers
     python_wrappers = ''
     for cdef in cdef_list:
+
         python_wrappers += build_python_func(
             cdef,
             build_func_body,

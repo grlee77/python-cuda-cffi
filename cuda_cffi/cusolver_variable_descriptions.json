@@ -153,5 +153,7 @@
     "params": "see NVIDIA docs",
     "ldv": "see NVIDIA docs",
     "econ": "see NVIDIA docs",
-    "sort_svd": "see NVIDIA docs"
+    "sort_svd": "see NVIDIA docs",
+    "options": "see NVIDIA docs",
+    "numnz": "see NVIDIA docs"
 }

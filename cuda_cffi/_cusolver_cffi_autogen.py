@@ -16,7 +16,8 @@ import json
 
 from ._cffi_autogen_common import (
     get_variable_descriptions, get_function_descriptions, CUDA_ROOT, ffi_init,
-    cuda_include_path, reindent, split_line, generate_cffi_python_wrappers)
+    cuda_include_path, reindent, split_line, generate_cffi_python_wrappers,
+    _remove_comment)
 
 # CUDA 8.0: had to add host_defines.h too for __align__(2), etc. to work
 # cusparse happens to already include host_defines.h indirectly via cusparse.h
@@ -86,11 +87,14 @@ def generate_cffi_cdef(
         with open(hdr, 'r') as f:
             cusolver_hdr = f.readlines()
 
+        cusolver_hdr = [_remove_comment(l) for l in cusolver_hdr]
+
         # skip lines leading up to first typedef or struct
         for idx, line in enumerate(cusolver_hdr):
-            if line.startswith('typedef') or line.startswith('struct'):
-                start_line = idx
-                break
+            if ((line.startswith('typedef') and not line.startswith('typedef __int64')) or
+                line.startswith('struct')):
+                    start_line = idx
+                    break
 
         # skip closing #if defined logic
         for idx, line in enumerate(cusolver_hdr[start_line:]):
