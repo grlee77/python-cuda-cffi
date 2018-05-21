@@ -12,12 +12,18 @@ This software is still at the experimental/alpha stage.  At this point CSR
 routines from cuSPARSE are the only functions with higher-level python wrappers
 and tests.
 
-No official documentation exists yet, but there is a short example below and
+No official documentation exists, but there is a short example below and
 more can be seen in the functions in tests/test_cusparse.py.
 
+Related Software
+----------------
 This routines provided here are intended to be complementary to those provided
-in the scikit-cuda package:
+in the scikit-cuda package. Scikit-cuda wraps a subset of cuSOLVER:
 https://github.com/lebedov/scikit-cuda
+
+Anaconda also provides wrappers for cuSPARSE within pyculib (formerly known as
+Accelerate):
+http://pyculib.readthedocs.io/en/latest/
 
 If you are interested in cuDNN, there is a set of wrappers for that here:
 https://github.com/hannes-brt/cudnn-python-wrappers
