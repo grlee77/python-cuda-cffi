@@ -1,3 +1,8 @@
+# Notice: This project is not being actively maintained.
+
+I have transferred GPU-related efforts to making contributions to the community-maintained [CuPy](https://cupy.dev/) library which implements functions based on the NumPy and SciPy APIs and wraps much cuSPARSE, cuSOLVER, cuFFT, etc.
+
+
 python-cuda-cffi
 ================
 
